@@ -1,0 +1,2 @@
+[my_vm]
+host_name ansible_host=your_server_ip_or_domain ansible_user=your_ssh_user

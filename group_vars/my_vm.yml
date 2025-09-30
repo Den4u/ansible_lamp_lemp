@@ -1,0 +1,25 @@
+# name site & config
+server_name: "your_domain.com"
+conf_file: "your_domain.com.conf"
+
+# php version
+php_ver: "your_php_ver"
+
+# apache mail (lamp)
+admin_email: your_mail@mail.com
+
+# fail2ban conf
+
+# path to auth.log
+logpath_ssh: "%(sshd_log)s"
+
+# blocking time and attempts
+maxretry_f2b: 3
+findtime_f2b: 9m
+bantime_f2b: 1d
+
+# exclude IP address from blocking (delimiter space)
+ignoreip_f2b: your_ip
+
+# port ssh
+port_ssh_f2b: 22

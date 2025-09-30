@@ -1,0 +1,33 @@
+---
+- name: configure LAMP stack
+  hosts: my_vm
+  become: True
+  vars_files:
+    - secrets.yml
+
+  pre_tasks:
+    - name: update the apt cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+  roles:
+    - role: apache
+
+    - role: mysql
+
+    - role: php
+      vars:
+        php_packages:
+          - php{{ php_ver }}
+          - libapache2-mod-php{{ php_ver }}
+          - php{{ php_ver }}-mysql
+
+    - role: ufw
+      vars:
+        ufw_allowed_services:
+          - 'Apache Full'
+          - 'OpenSSH'
+
+    - role: fail2ban
+ 

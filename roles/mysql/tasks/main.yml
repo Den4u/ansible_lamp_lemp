@@ -1,0 +1,11 @@
+---
+- name: Mysql install
+  apt:
+    name: mysql-server
+    state: present
+
+- name: check mysql is enabled and started
+  systemd:
+    name: mysql
+    state: started
+    enabled: yes

@@ -1,0 +1,39 @@
+---
+- name: install Apache
+  apt:
+    name: apache2
+    state: present
+
+- name: create directory for site
+  file:
+    path: "/var/www/{{ server_name }}"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '0755'
+    state: directory
+
+- name: copy apache config file
+  template:
+    src: templates/apache.conf.j2
+    dest: "/etc/apache2/sites-available/{{ conf_file }}"
+  notify: reload apache
+
+- name: enable site
+  command: "a2ensite {{ conf_file }}"
+  notify: reload apache
+
+- name: disable 000-default site
+  command: a2dissite 000-default
+  notify: reload apache
+
+- name: copy index.html
+  template:
+    src: templates/index.html.j2
+    dest: "/var/www/{{ server_name }}/index.html"
+  become: False   
+
+- name: check apache is enabled and started
+  service:
+    name: apache2
+    state: started
+    enabled: yes

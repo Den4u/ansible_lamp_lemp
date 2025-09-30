@@ -1,0 +1,19 @@
+---
+- name: ufw install
+  apt:
+    name: ufw
+    state: present
+
+- name: allow services
+  ufw:
+    rule: allow
+    name: "{{ item }}"
+    state: enabled
+  loop: "{{ ufw_allowed_services }}"
+  when: ufw_allowed_services is defined
+
+- name: check ufw is enabled and started
+  systemd:
+    name: ufw
+    state: started
+    enabled: yes

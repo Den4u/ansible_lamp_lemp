@@ -1,0 +1,44 @@
+---
+- name: install Nginx
+  apt:
+    name: nginx
+    state: present
+
+- name: create directory for site
+  file:
+    path: "/var/www/{{ server_name }}"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '0755'
+    state: directory
+
+- name: copy nginx config file
+  template:
+    src: templates/nginx.conf.j2
+    dest: "/etc/nginx/sites-available/{{ conf_file }}"
+  notify: reload nginx
+
+- name: enable configuration
+  file:
+    src: "/etc/nginx/sites-available/{{ conf_file }}"
+    dest: "/etc/nginx/sites-enabled/{{ conf_file }}"
+    state: link
+  notify: reload nginx
+
+- name: unlink default conf
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+  notify: reload nginx
+
+- name: copy index.html
+  template:
+    src: templates/index.html.j2
+    dest: "/var/www/{{ server_name }}/index.html"
+  become: False  
+
+- name: check nginx is enabled and started
+  service:
+    name: nginx
+    state: started
+    enabled: yes

@@ -1,0 +1,7 @@
+---
+- name: install php packages
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ php_packages }}"
+  when: php_packages is defined
