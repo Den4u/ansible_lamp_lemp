@@ -4,44 +4,46 @@
 ![Nginx](https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white) 
 ![MySQL](https://img.shields.io/badge/mysql-4479A1.svg?style=for-the-badge&logo=mysql&logoColor=white)
 ![PHP](https://img.shields.io/badge/php-%23777BB4.svg?style=for-the-badge&logo=php&logoColor=white)
-<br />
+<br>
 ### Содержание:
 * [Описание](#описание)
 * [Стек](#стек)
 * [Требования](#требования)
-* [Совместимость версий](#совместимость)
-* [Структура репозитория](#структура)
-* [Как запустить сценарий](#запуск)
-* [Проверка](#проверка)
-<br />
-<br />
+* [Совместимость версий](#совместимость-версий)
+* [Структура репозитория](#структура-репозитория)
+* [Как запустить сценарий](#как-запустить-сценарий)
+* [Проверка](#проверка) 
+
 ### Описание:
 LA(E)MP - Linux, Apache(Nginx), MySQL, PHP
 
 Репозиторий содержит готовые сценарии (lamp.yml и lemp.yml) для автоматической установки LAMP/LEMP стека на удаленный сервер Ubuntu. Включает базовую настройку UFW и Fail2ban для обеспечения безопасности сервера.
-<br />
-### Стек: <br />
+
+### Стек:
 - Операционная система: Ubuntu (20.04, 22.04, 24.04 LTS)
 - Веб-сервер: Apache2 / Nginx
 - База данных: MySQL
 - Язык: PHP
 - Безопасность: UFW, Fail2ban
-<br />
+
 
 ### Требования:
 - Ubuntu 20.04/22.04/24.04 LTS
-- Ansible (протестировано на версии 2.16)
+- Ansible (протестировано на Ansible 2.16)
 - Python (протестировано на Python 3.8/3.12)
 - SSH-доступ: Для пользователя, от имени которого запускается Ansible, должен быть настроен SSH-доступ к целевому хосту. Рекомендуется использовать SSH-ключи.
-<br />
+
+
 ### Совместимость версий:
 Соответствие версий Ubuntu:PHP по умолчанию:
 - Ubuntu 20.04 LTS: PHP 7.4
 - Ubuntu 22.04 LTS: PHP 8.1
-- Ubuntu 24.04 LTS: PHP 8.3 <br/>
+- Ubuntu 24.04 LTS: PHP 8.3 <br>
 Необходимо указать версию PHP, определив переменную ver_php в group_vars.
-<br />
+
+
 ### Структура репозитория:
+
 ```
 .
 ├── group_vars/
@@ -61,12 +63,12 @@ LA(E)MP - Linux, Apache(Nginx), MySQL, PHP
 ├── README.md         # Описание (этот файл)
 └── secrets.yml       # Зашифрованный файл с секретами (создается пользователем)
 ```
-<br />
+
 ### Как запустить сценарий:
 
 1. Клонируйте репозиторий:
 ```
-git clone git@github.com:Den4u/______.git
+git clone git@github.com:Den4u/ansible_lamp_lemp.git
 ```
 
 2. Настройте файл инвентаря inventory/hosts:
@@ -92,16 +94,17 @@ ansible_become_pass: "your_sudo_passwd"
 
 5. Настройте переменные в groups_var.
 
-6. Запустите плейбук.<br />
+6. Запустите плейбук.<br>
 Для LAMP:
 ```
 ansible-playbook lamp.yml --ask-vault-pass
 ```
-Для LEMP:
+ Для LEMP:
 ```
 ansible-playbook lemp.yml --ask-vault-pass
 ```
-<br />
+
+
 ### Проверка:
 
 - Откройте веб-браузер и перейдите по адресу вашего сервера: http://your_server_ip_or_domain
@@ -111,5 +114,5 @@ sudo systemctl status mysql
 sudo systemctl status fail2ban
 ``` 
 
-<br />
+
 ### Автор: [Den4u](https://github.com/Den4u)
